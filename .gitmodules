@@ -1,0 +1,3 @@
+[submodule "fizzx"]
+    path = fizzx
+    url = https://bitbucket.org/itraykov/fizzx.git
