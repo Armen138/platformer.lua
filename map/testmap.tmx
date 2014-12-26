@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="../../Downloads/Kenney Platformer Base Pack for Tiled/tileset_forTiled.tsx"/>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2LutwkAURVE+DSACKkAUALQClAMkkNECARkhNEBpL7mBNZElPnf0Zi3J2uPsJJalGQyAd7yyB0CFNtFtdJc1pFHn7AFQsVPn/CwKrZpGh9FR0fFv59DTvXO+pa1oz6Qo9dlHD9Fj0o4WTToPdXpEL6kr2uT/Ub/y+5hlDWmQ76N+j+J9nrIC6rSMrqLrrCH0ssgeAF9S3oX0bffO5PrpUQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8I/8AfEcEHc=
+  </data>
+ </layer>
+</map>
