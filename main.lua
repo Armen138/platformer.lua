@@ -56,6 +56,7 @@ step = 0.016
 accum = 0
 
 function love.update(dt)
+    fizz.gravity = 1200
     accum = accum + dt
     while(accum > step) do
         player.update(dt)

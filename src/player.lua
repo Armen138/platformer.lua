@@ -83,6 +83,13 @@ function player.load(fizz)
         else
             p.grounded = false
         end
+        if b.type == 'sensor' then
+            --if b.trigger == 'ladder' then
+                --console.log('this is a ladder, suspending gravity')
+                --fizz.gravity = 0
+            --end
+            return false
+        end
         return true
     end
 end
