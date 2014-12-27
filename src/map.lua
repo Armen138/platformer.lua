@@ -15,11 +15,9 @@ map.height = data.height * 70
 function hasId(trigger, id)
     for i, v in ipairs(triggers[trigger]) do
         if v == id then
-            console.log('id found ' .. id)
             return true
         end
     end
-    console.log('id not found ' .. id)
     return false
 end
 
@@ -41,7 +39,6 @@ function map.load(fizz)
                     local top = math.floor(tile / tiles.row) * (tiles.size + tiles.spacing) + tiles.margin
                     local quad = love.graphics.newQuad(left, top, 70, 70, tiles.image:getWidth(), tiles.image:getHeight())
                     if layer.name == 'platforms' then 
-                        console.log('adding tile ' .. tile)
                         local t = fizz.addStatic('rect', ((x - 1) * tiles.size) + 35, ((y - 1) * tiles.size) + 35, 70, 70)
                         t.quad = quad --love.graphics.newQuad(left, top, 70, 70, tiles.image:getWidth(), tiles.image:getHeight())
                         table.insert(layers[layer.name], t)
