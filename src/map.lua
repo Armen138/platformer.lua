@@ -3,7 +3,7 @@ local map = {}
 local tiles = {}
 local physical = {}
 local layers = {}
-
+local drawOrder = {}
 local triggers = {
     ladder = { 177, 178 },
     lockboxes = { 173, 174, 175, 176 },
@@ -21,6 +21,24 @@ function hasId(trigger, id)
     return false
 end
 
+function ignoreSensors(p, b, nx, ny, pen)
+    if ny < 0 then
+        p.grounded = true
+        p.nx = nx
+        p.ny = ny
+    else
+        p.grounded = false
+    end
+    if b.type == 'sensor' then
+        --if b.trigger == 'ladder' then
+            --console.log('this is a ladder, suspending gravity')
+            --fizz.gravity = 0
+        --end
+        return false
+    end
+    return true
+end
+
 function map.load(fizz)
     tiles.image = love.graphics.newImage(data.tilesets[1].image) 
     tiles.size = data.tilesets[1].tilewidth
@@ -30,6 +48,7 @@ function map.load(fizz)
 
     for i, layer in ipairs(data.layers) do
         layers[layer.name] = {}
+        table.insert(drawOrder, 1, layer.name)
         for x = 1, data.width, 1 do
             for y = 1, data.height, 1 do
                 idx = (y - 1) * data.width + (x)
@@ -58,6 +77,7 @@ function map.load(fizz)
                         d.type = 'box'
                         d.bounce = 0.3
                         d.friction = 0.3
+                        d.onCollide = ignoreSensors
                         table.insert(layers[layer.name], d)
                     else 
                         local ni = {
@@ -78,7 +98,9 @@ function map.load(fizz)
 end
 
 function map.draw()
-    for name, layer in pairs(layers) do
+    for i, name in ipairs(drawOrder) do
+    --for name, layer in pairs(layers) do
+        local layer = layers[name]
         for i, v in ipairs(layer) do
             love.graphics.draw(tiles.image, 
                                 v.quad, 
