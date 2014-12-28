@@ -1,4 +1,5 @@
 require("fizzx/fizz")
+version = require("version")
 console = require("src/console")
 ui = require("src/ui")
 map = require("src/map")
@@ -31,11 +32,13 @@ function pause()
 end
 
 function help()
+    console.log('platformer.lua ' .. version)
     console.log('arrows to move, D for debug drawing, ESCAPE for menu')
 end
 function love.load() 
     local font = love.graphics.newFont('ui/Font/kenvector_future.ttf')
     love.graphics.setFont(font)
+    console.log('platformer.lua ' .. version)
     handlers = {
         escape = pause, --system.exit,
         h = help,
