@@ -12,7 +12,7 @@ function console.draw()
     end
     for line = start, start + 10, 1 do
         if out[line] then
-            love.graphics.print(out[line], 20, 20 * (line - start))
+            love.graphics.print(out[line], 20, 10 * (line - start))
         end
     end
 end

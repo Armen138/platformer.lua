@@ -24,7 +24,7 @@ function toggleDebug()
 end
 
 function pause()
-    if ui.current ~= 'pause' then
+    if ui.current == 'play' then
         ui.current = 'pause'
     else
         ui.current = 'play'
@@ -36,6 +36,7 @@ function help()
     console.log('arrows to move, D for debug drawing, ESCAPE for menu')
 end
 function love.load() 
+    love.window.setMode(800, 600, { fullscreen = true, fullscreentype = 'desktop' })
     local font = love.graphics.newFont('ui/Font/kenvector_future.ttf')
     love.graphics.setFont(font)
     console.log('platformer.lua ' .. version)
