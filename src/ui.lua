@@ -18,7 +18,7 @@ local ui = {
 
 function ui.load() 
     font = love.graphics.newFont('ui/Font/kenvector_future.ttf', 25)
-    defaultFont = love.graphics.newFont('ui/Font/kenvector_future.ttf', 10)
+    defaultFont = love.graphics.newFont('ui/Font/kenvector_future_thin.ttf', 10)
     sheets.blue.image = love.graphics.newImage('ui/Spritesheet/blueSheet.png');
     sheets.red.image = love.graphics.newImage('ui/Spritesheet/redSheet.png');
     sheets.yellow.image = love.graphics.newImage('ui/Spritesheet/yellowSheet.png');
@@ -30,16 +30,22 @@ end
 function ui.menu(id, elements)
     menus[id] = {}
     for k, v in pairs(elements) do
-        menus[id][k] = ui.button(v.label, v.sheet, v.x, v.y, v.style, v.active)
+        if k == 'options' then
+            menus[id].options = v
+        else
+            menus[id][k] = ui.button(v.label, v.sheet, v.x, v.y, v.style, v.active)
+        end
     end
 end
 
 function love.mousepressed(x, y, button)
     if ui.current then
         for k, v in pairs(menus[ui.current]) do
-            if v.isInside(x, y) then
-                if ui.on.click[k] then
-                    ui.on.click[k](button)
+            if k ~= 'options' then 
+                if v.isInside(x, y) then
+                    if ui.on.click[k] then
+                        ui.on.click[k](button)
+                    end
                 end
             end
         end
@@ -51,9 +57,11 @@ function ui.update(dt)
     mouse.y = love.mouse.getY()
     if ui.current then
         for k, v in pairs(menus[ui.current]) do
-            if v.isInside(mouse.x, mouse.y) then
-                if v.onHover then
-                    v.onHover()
+            if k ~= 'options' then 
+                if v.isInside(mouse.x, mouse.y) then
+                    if v.onHover then
+                        v.onHover()
+                    end
                 end
             end
         end
@@ -62,8 +70,16 @@ end
 
 function ui.draw() 
     if ui.current then
+        if menus[ui.current].options and
+            menus[ui.current].options.modal then
+            love.graphics.setColor(0, 0, 127, 127)
+            love.graphics.rectangle('fill', 0, 0, love.window.getWidth(), love.window.getHeight())
+            love.graphics.setColor(255, 255, 255, 255)
+        end
         for k, v in pairs(menus[ui.current]) do
-            v.draw()
+            if k ~= 'options' then 
+                v.draw()
+            end
         end
     end
 end

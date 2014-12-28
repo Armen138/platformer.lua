@@ -23,7 +23,11 @@ function toggleDebug()
 end
 
 function pause()
-    ui.current = 'pause'
+    if ui.current ~= 'pause' then
+        ui.current = 'pause'
+    else
+        ui.current = 'play'
+    end
 end
 
 function help()
@@ -45,24 +49,82 @@ function love.load()
         x = love.window.getWidth() / 2,
         y = love.window.getHeight() / 2
     }
+    ui.menu('landing', {
+        options = { modal = true },
+        play = { 
+            label  = 'play',
+            sheet  = 'green',
+            x      = center.x,
+            y      = center.y - 100,
+            style  = 'button02',
+            active = 'button03'
+        },
+        quit = { 
+            label  = 'quit',
+            sheet  = 'red',
+            x      = center.x,
+            y      = center.y - 40,
+            style  = 'button01',
+            active = 'button02'
+        }
+    })
     ui.menu('pause', {
-         -- panel = { label = '', sheet = 'grey', x = center.x, y = center.y - 110, style = 'panel', active = 'panel' },
-        resume = { label = 'resume', sheet = 'green', x = center.x, y = center.y - 100, style = 'button02', active = 'button03' },
-        restart = { label = 'restart', sheet = 'blue', x = center.x, y = center.y - 40, style = 'button02', active = 'button03' },
-        quit = { label = 'quit', sheet = 'red', x = center.x, y = center.y + 20, style = 'button01', active = 'button02' }
+        options = { modal = true },
+        resume = { 
+            label  = 'resume',
+            sheet  = 'green',
+            x      = center.x,
+            y      = center.y - 100,
+            style  = 'button02',
+            active = 'button03'
+        },
+        restart = { 
+            label  = 'restart',
+            sheet  = 'blue',
+            x      = center.x,
+            y      = center.y - 40,
+            style  = 'button02',
+            active = 'button03'
+        },
+        quit = { 
+            label  = 'quit',
+            sheet  = 'red',
+            x      = center.x,
+            y      = center.y + 20,
+            style  = 'button01',
+            active = 'button02'
+        }
+    })
+    ui.menu('play', {
+        ingameRestart = { 
+            label  = 'r',
+            sheet  = 'red',
+            x      = love.window.getWidth() - 50,
+            y      = 50,
+            style  = 'button04',
+            active = 'button05'
+        }
     })
     ui.on.click.quit = function(btn) 
         system.exit()
     end
 
     ui.on.click.resume = function(btn)
-        ui.current = nil
+        ui.current = 'play'
     end
 
     ui.on.click.restart = function(btn)
-        ui.current = nil
+        ui.current = 'play'
         console.log('TODO: restart')
     end
+
+    ui.on.click.ingameRestart = function(btn)
+        console.log('TODO: ingame restart')
+    end
+    ui.on.click.play = function(btn)
+        ui.current = 'play'
+    end
+    ui.current = 'landing'
 end
 
 function love.keypressed(key)
@@ -92,12 +154,14 @@ accum = 0
 
 function love.update(dt)
     ui.update(dt)
-    fizz.gravity = 1200
-    accum = accum + dt
-    while(accum > step) do
-        player.update(dt)
-       fizz.update(step) 
-       accum = accum - step
+    if ui.current == 'play' then 
+        fizz.gravity = 1200
+        accum = accum + dt
+        while(accum > step) do
+            player.update(dt)
+           fizz.update(step) 
+           accum = accum - step
+        end
     end
 end
 
@@ -106,6 +170,4 @@ function love.draw()
     player.draw()
     console.draw()
     ui.draw()
-    --button.draw()
-    --button2.draw()
 end
