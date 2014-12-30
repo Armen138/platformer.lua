@@ -25,9 +25,9 @@ end
 
 function pause()
     if ui.current == 'play' then
-        ui.current = 'pause'
+        ui.set('pause')
     else
-        ui.current = 'play'
+        ui.set('play')
     end
 end
 
@@ -114,11 +114,11 @@ function love.load()
     end
 
     ui.on.click.resume = function(btn)
-        ui.current = 'play'
+        ui.set('play')
     end
 
     ui.on.click.restart = function(btn)
-        ui.current = 'play'
+        ui.set('play')
         console.log('TODO: restart')
     end
 
@@ -126,9 +126,9 @@ function love.load()
         console.log('TODO: ingame restart')
     end
     ui.on.click.play = function(btn)
-        ui.current = 'play'
+        ui.set('play')
     end
-    ui.current = 'landing'
+    ui.set('landing')
 end
 
 function love.keypressed(key)
