@@ -4,6 +4,7 @@ local tiles = {}
 local physical = {}
 local layers = {}
 local drawOrder = {}
+local bg
 local triggers = {
     ladder = { 177, 178 },
     lockboxes = { 173, 174, 175, 176 },
@@ -45,6 +46,7 @@ function map.load(fizz)
     tiles.spacing = data.tilesets[1].spacing        
     tiles.margin = data.tilesets[1].margin 
     tiles.row = math.floor(data.tilesets[1].imagewidth / (tiles.size + tiles.spacing))
+    bg = love.graphics.newImage('map/bg_shroom.png')
 
     for i, layer in ipairs(data.layers) do
         layers[layer.name] = {}
@@ -98,6 +100,12 @@ function map.load(fizz)
 end
 
 function map.draw()
+    love.graphics.setColor(109, 164, 26, 255)
+    love.graphics.rectangle('fill', 0, 0, love.window.getWidth(), love.window.getHeight())
+    love.graphics.setColor(255, 255, 255, 255)
+    for w = 0, love.window.getWidth(), bg:getWidth() do
+        love.graphics.draw(bg, w, 0)
+    end
     for i, name in ipairs(drawOrder) do
     --for name, layer in pairs(layers) do
         local layer = layers[name]

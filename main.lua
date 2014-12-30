@@ -7,6 +7,13 @@ scroll = require("src/scroll")
 system = require("src/system")
 player = require("src/player")
 
+initialState = {
+    player = { 
+        x = 2 * 70,
+        y = 48 * 70
+    }
+}
+
 DEBUG = false
 
 fizz.maxVelocity = 300
@@ -35,6 +42,11 @@ function help()
     console.log('platformer.lua ' .. version)
     console.log('arrows to move, D for debug drawing, ESCAPE for menu')
 end
+
+function testDialog()
+    ui.showDialog('testdialog', 'this is a test', 'a dialog for testing purposes!a dialog for testing purposes!a dialog for testing purposes!a dialog for testing purposes!a dialog for testing purposes!a dialog for testing purposes!a dialog for testing purposes!a dialog for testing purposes!a dialog for testing purposes!a dialog for testing purposes!', pause, pause)
+end
+
 function love.load() 
     love.window.setMode(800, 600, { fullscreen = true, fullscreentype = 'desktop' })
     local font = love.graphics.newFont('ui/Font/kenvector_future.ttf')
@@ -44,11 +56,12 @@ function love.load()
         escape = pause, --system.exit,
         h = help,
         f1 = help,
-        d = toggleDebug
+        d = toggleDebug,
+        t = testDialog
     }
     ui.load()
     map.load(fizz)
-    player.load(fizz)
+    player.load(initialState.player.x, initialState.player.y, fizz)
     local center = {
         x = love.window.getWidth() / 2,
         y = love.window.getHeight() / 2
@@ -119,7 +132,8 @@ function love.load()
 
     ui.on.click.restart = function(btn)
         ui.set('play')
-        console.log('TODO: restart')
+        player.set(initialState.player.x, initialState.player.y)
+        console.log('restarting...')
     end
 
     ui.on.click.ingameRestart = function(btn)
@@ -133,7 +147,6 @@ end
 
 function love.keypressed(key)
     if(handlers[key]) then
-        console.log("handling key: " .. key)
         handlers[key]()
     end
     if(player.keypress[key]) then
@@ -172,6 +185,6 @@ end
 function love.draw() 
     map.draw()
     player.draw()
-    console.draw()
     ui.draw()
+    console.draw()
 end

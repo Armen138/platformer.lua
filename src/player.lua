@@ -58,7 +58,11 @@ function player.draw()
     end
 end
 
-function player.load(fizz) 
+function player.set(x, y)
+    fizz.positionShape(p, x, y)
+end
+
+function player.load(x, y, fizz) 
     chr = {
         idle  = love.graphics.newImage('chars/Blue/Alpha/idle.png'),
         stand = love.graphics.newImage('chars/Blue/Alpha/stand.png'),
@@ -68,11 +72,7 @@ function player.load(fizz)
     }
     console.log('loading player')
     frame = 1
-    pos = {
-        x = 2 * 70,
-        y = 48 * 70
-    }
-    p = fizz.addDynamic('rect', pos.x, pos.y, 70, 100)
+    p = fizz.addDynamic('rect', x, y, 70, 100)
     p.damping = 5
     p.friction = 0.15
     p.onCollide = function (p, b, nx, ny, pen)
