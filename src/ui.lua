@@ -132,6 +132,14 @@ function drawMenu(menu, xOffset, yOffset, opacity)
                 menus[menu].options.panel.width, 
                 menus[menu].options.panel.height 
                 )
+            love.graphics.setColor(255, 255, 255, 199 * opacity)
+            love.graphics.rectangle(
+                'line',  
+                menus[menu].options.panel.x + xOffset, 
+                menus[menu].options.panel.y + yOffset, 
+                menus[menu].options.panel.width, 
+                menus[menu].options.panel.height 
+                )
             love.graphics.setColor(255, 255, 255, 255)
         end
     end
