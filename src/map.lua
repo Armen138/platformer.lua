@@ -1,14 +1,17 @@
-local data = require("../map/testmap3")
+local data = require("../map/level1")
+local easing = require('../src/easing')
 local map = {}
 local tiles = {}
 local physical = {}
 local layers = {}
 local drawOrder = {}
 local bg
+local bumpStart = 0
 local triggers = {
     ladder = { 177, 178 },
     lockboxes = { 173, 174, 175, 176 },
-    doors = { 133 }
+    doors = { 133 },
+	coin = { 8 }
 }
 map.width = data.width * 70
 map.height = data.height * 70
@@ -41,7 +44,7 @@ function ignoreSensors(p, b, nx, ny, pen)
 end
 
 function map.load(fizz)
-    tiles.image = love.graphics.newImage(data.tilesets[1].image) 
+    tiles.image = love.graphics.newImage('map/' .. data.tilesets[1].image) 
     tiles.size = data.tilesets[1].tilewidth
     tiles.spacing = data.tilesets[1].spacing        
     tiles.margin = data.tilesets[1].margin 
@@ -81,6 +84,18 @@ function map.load(fizz)
                         d.friction = 0.3
                         d.onCollide = ignoreSensors
                         table.insert(layers[layer.name], d)
+					elseif layer.name == 'collectibles' then
+                        local d = fizz.addStatic('rect', ((x - 1) * tiles.size) + 35, ((y - 1) * tiles.size) + 35, 70, 70)
+                        d.quad = quad
+                        d.type = 'sensor'
+                        if hasId('coin', tile) then
+                            d.trigger = 'coin'
+                        else
+                            d.trigger = 'bullshit'
+                        end
+						d.collectible = true;
+                        table.insert(layers[layer.name], d)
+						
                     else 
                         local ni = {
                             quad = quad,
@@ -103,6 +118,11 @@ function map.draw()
     love.graphics.setColor(109, 164, 26, 255)
     love.graphics.rectangle('fill', 0, 0, love.window.getWidth(), love.window.getHeight())
     love.graphics.setColor(255, 255, 255, 255)
+    local now = love.timer.getTime()
+	if now - bumpStart > 500 then
+		bumpStart = now
+	end
+    local bump = 0;
     for w = 0, love.window.getWidth(), bg:getWidth() do
         love.graphics.draw(bg, w, 0)
     end
@@ -110,10 +130,13 @@ function map.draw()
     --for name, layer in pairs(layers) do
         local layer = layers[name]
         for i, v in ipairs(layer) do
+			if v.collectible == true then
+				bump = easing.inQuad(now - bumpStart, -15, 30, 500)
+			end
             love.graphics.draw(tiles.image, 
                                 v.quad, 
                                 math.floor(v.x - v.hw - scroll.x), 
-                                math.floor(v.y - v.hh - scroll.y)
+                                math.floor(v.y - v.hh - scroll.y + bump)
                                 )
             if DEBUG then
                 if v.type == 'sensor' then

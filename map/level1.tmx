@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="50" tilewidth="70" tileheight="70">
+ <tileset firstgid="1" source="tileset_forTiled.tsx"/>
+ <layer name="collectibles" width="30" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzqENADAMBLHA7D9xaXBI9a0tHb8qAAAAUvXtgYXE59f1KEXSKwD/OJAfADE=
+  </data>
+ </layer>
+ <layer name="dynamics" width="30" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0EENADAMA7HypzAGQ1kKe0zKIzaBRDcDAAAA8M9NHyimfU6qfdtus5M+wJMFjugD7g==
+  </data>
+ </layer>
+ <layer name="platforms" width="30" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0kEKACEIheGYO5bHmebmKTOLCGrVlMH/wduJKBoCAAAAAADwJmpk9xA/sv3Slxl7zuyF163JmmdQU9+xjVQ13OUMuZPRD6xmf+lpHvh1bUoB2hEMoQ==
+  </data>
+ </layer>
+ <layer name="triggers" width="30" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0bEJACAMRUGn13EEXdDWQhuRpLlb4JH8UgAAAADizKTu0H122ixix9MNEf/cGy2pW5O6kXR1f+hJ3ZsF8O0O9g==
+  </data>
+ </layer>
+ <layer name="decor" width="30" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt08EJgDAMBdBOIQ5QndgNuqiePVhJLAV5D0pO5YeElAIAAABAz3Grb6wjGunYrlcn5P5RZOejtNkN8Ch663syN3LrS/BfNrd+lJud2WgnIL4Epw==
+  </data>
+ </layer>
+</map>
